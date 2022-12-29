@@ -1,0 +1,291 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link href={% static "img/favicon.ico" %} rel="shortcut icon">
+    <!-- logo -->
+    <link href={% static "img/logoo.ico" %} rel="shortcut icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- static css -->
+    <link href={% static "css/style.css" %} rel="stylesheet">
+
+    <!-- Datatables JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/fc-4.1.0/fh-3.2.4/datatables.min.css"/>
+
+  
+    <title>Technical Test Developer</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="col-sm">
+            <a class="navbar-brand flex-grow-1" style="text-align: center; color: #fff; margin-left: 25px;">
+              {% block navbar-content  %} {% endblock navbar-content %}
+            </a>
+          </div>  
+          <!-- Input Search Navbar -->
+          {% block nav-btn %}
+          <div class="d-flex" style="margin-right: 25px;">
+            <div class="input-group input-group-sm">
+              <a class="btn btn-success btn-sm" style="width: 40px" title="Tambah Data Baru" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="fas fa-plus"></i>
+              </a>
+              <input class="form-control" type="search" id="search" placeholder="Live Search .." aria-label="Search">
+              <a href="{% url 'home' %}" class="btn btn-secondary btn-sm" title="Refresh" style="width: 40px;"> 
+                <i class="fas fa-sync-alt"></i>
+              </a>
+              <a href="/logout" class="btn btn-danger btn-sm" style="margin-left: 25px; border-radius: 50%;" title="logout" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                <i class="fas fa-power-off"></i>
+              </a>
+            </div>
+          </div>
+          {% endblock %}
+        </nav>
+      </header>  
+
+      <!-- ==Block Content (ROOT)== -->
+      {% block content %} {% endblock content %}
+
+      <!-- INCLUDE PAGE -->
+      {% include 'apps/TambahData.html' %}
+      {% include 'apps/modals/logout.html' %}
+
+    </div> <!-- END // Wrapper --> 
+
+    <footer class="bg-dark text-center text-lg-start" id="footer" style="color: #fff;">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"> &copy: {% now "Y" %} Copyright: 
+        <a class="text-light" href="#" style="text-decoration: none;">
+          <span style="color: greenyellow;">Tasa Fachri Oktasar</span>
+        </a>
+      </div>
+    </footer>
+
+    {% for messages in messages %}
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      {% if message.tags == 'error' %}
+      <script>
+          var m = "{{ message }}";
+          swal("Denied !", "Silahkan Masukan data dengan benar.", "error")
+      </script>
+      {% elif message.tags == 'success' %}
+      <script>
+        var m = "{{ messages}}";
+        swal("Perfect !", m, "success")
+      </script>
+      {% endif %}
+    {% endfor %}
+
+
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  
+    <!-- Datatables JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/fc-4.1.0/fh-3.2.4/r-2.3.0/datatables.min.js"></script>
+    
+  
+    <!-- Datatables script -->
+    <script>
+      $(document).ready(function () {
+    // Setup - add a text input to each footer cell
+      $('#example thead tr')
+          .clone(true)
+          .addClass('filters')
+          .appendTo('#example thead');
+  
+          var table = $('#example').DataTable({
+
+              // "ajax": "/JSData",
+              // "columns": [
+              //   {"data": "id"},
+              //   {"data": "nama"},
+              //   {"data": "email"},
+              //   {"data": "jabatan"},
+              //   {"data": "gaji"},
+              //   {"data": "jeniskelamin"},
+              //   {   
+              //       data: "id",
+              //       className: 'dt-body-center',
+              //       render: function (data,row,val){
+              //           return '<a class="btn btn-success btn-sm" style="width: 40px" data-bs-toggle="modal" data-bs-target="#editModal{{ karyawan.pk }}"><i class="fas fa-edit"></i></a>' ;
+              //       }
+              //   },
+              //   {   
+              //       data: "id",
+              //       className: 'dt-body-center',
+              //       render: function (data,row,val){
+              //           return '<a class="btn btn-success btn-sm" style="width: 40px" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>' ;
+              //       }
+              //   }
+              // ],
+
+              orderCellsTop: true,
+              fixedHeader: true,
+              paging: true,
+              pageLength: 10,
+              searching: true,
+              bInfo: true,
+              bSort: true,
+              "columnDefs":[{
+                "target": [6,7,8],
+                "orderable": false
+              }],
+              scrollX: true,
+
+              initComplete: function () {
+                  var api = this.api();
+      
+                  // For each column
+                  api
+                      .columns([0,1,2,3,4,5])
+                      .eq(0)
+                      .each(function (colIdx) {
+                          // Set the header cell to contain the input element
+                          var cell = $('.filters th').eq(
+                              $(api.column(colIdx).header()).index()
+                          );
+                          var title = $(cell).text();
+                          $(cell).html('<input type="text" placeholder="' + title + '" />');
+      
+                          // On every keypress in this input
+                          $(
+                              'input',
+                              $('.filters th').eq($(api.column(colIdx).header()).index())
+                          )
+                              .off('keyup change')
+                              .on('change', function (e) {
+                                  // Get the search value
+                                  $(this).attr('title', $(this).val());
+                                  var regexr = '({search})'; //$(this).parents('th').find('select').val();
+      
+                                  var cursorPosition = this.selectionStart;
+                                  // Search the column for that value
+                                  api
+                                      .column(colIdx)
+                                      .search(
+                                          this.value != ''
+                                              ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                              : '',
+                                          this.value != '',
+                                          this.value == ''
+                                      )
+                                      .draw();
+                              })
+                              .on('keyup', function (e) {
+                                  e.stopPropagation();
+      
+                                  $(this).trigger('change');
+                                  $(this)
+                                      .focus()[0]
+                                      .setSelectionRange(cursorPosition, cursorPosition);
+                              });
+                      });
+              },
+              dom: 'lBfrtip',
+              buttons: [
+                  {   //Copy
+                      extend: 'copy',
+                      text: '<i class="fas fa-clone"></i>',
+                      className: 'btn btn-info m-2',
+                      titleAttr: 'Copy',
+                      exportOptions: {
+                          columns: [0,1,2,3,4,5,6]
+                      },
+                  },
+                  {   //EXCEL
+                      extend: 'excel',
+                      text: '<i class="fas fa-file-excel"></i>',
+                      className: 'btn btn-info m-2',
+                      titleAttr: 'Excel',
+                      exportOptions: {
+                          columns: [0,1,2,3,4,5,6]
+                      },
+                  },
+                  {   //Print
+                      extend: 'print',
+                      text: '<i class="fas fa-print"></i>',
+                      className: 'btn btn-info m-2',
+                      titleAttr: 'Print',
+                      exportOptions: {
+                          columns: [0,1,2,3,4,5,6]
+                      },
+                      customize: function ( win ){
+                          $(win.document.body).css('font-size', '10pt')
+                          $(win.document.body).find('table')
+                          .addClass('compact')
+                          .css('font-size', 'inheri');
+                      }
+                  },
+                  {   //PDF
+                      extend: 'pdf',
+                      text: '<i class="fas fa-file-pdf"></i>',
+                      className: 'btn btn-info m-2',
+                      titleAttr: 'PDF',
+                      exportOptions: {
+                          columns: [0,1,2,3,4,5,6]
+                      },
+                      tableHeader: {
+                          alignment: 'center'
+                      },
+                      customize: function (doc) {
+                          doc.styles.tableHeader.alignment = 'center';
+                          doc.styles.tableBodyOdd.alignment = 'center';
+                          doc.styles.tableBodyEven.alignment = 'center';
+                          doc.styles.tableHeader.fontSize = 7;
+                          doc.defaultStyle.fontSize = 6;
+
+                          doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
+                      }
+                  },
+              ],
+          });
+          var newSearch = $("#example").DataTable();
+      $('#search').keyup(function() {
+        newSearch.search($(this).val()).draw();
+      })
+      });
+
+
+    </script>
+
+    <!-- Pulse Script -->
+    <script>
+      (function pulse() {
+        $('.text-pulse').fadeOut(1000).fadeIn(1000, pulse);
+      })();
+    </script>
+
+
+    <!-- Script Hide / Show Pass -->
+    <script>
+        function hidepass(){
+            var p = document.getElementById("password");
+            if (p.type === "password") {
+                p.type = "text"
+            }
+            else {
+                p.type = "password"
+            }
+        }
+    </script>
+  </body>
+</html>
+

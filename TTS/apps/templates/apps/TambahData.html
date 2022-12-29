@@ -1,0 +1,73 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="addModal" {% endblock modal-id %} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addBackdropLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="addBackdropLabel">
+            {% block modal-title %}   <i class="fas fa-plus"></i> &nbsp; &nbsp; Tambah Data {% endblock modal-title %} 
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form method="POST" {% block action %} action="/TambahData/" {% endblock action%} autocomplete="off">
+        {% csrf_token %}
+        <div class="modal-body">
+            <!-- block id -->
+            {% block Value-id %} {% endblock Value-id %}
+
+            <div class="input-group mb-3">
+                <span class="btn border-secondary bg-light side-label"><i class="fas fa-user-alt"></i></span>
+                <input type="text" class="form-control" name="nama" maxlength="40" placeholder="Full Name" required {% block Value-nama %} {% endblock Value-nama %}>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="btn border-secondary bg-light side-label"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" name="email" maxlength="40" placeholder="Email" required {% block Value-email %} {% endblock Value-email %}>
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="btn border-secondary bg-light side-label"><i class="fas fa-user-cog"></i></span>
+                <input type="text" class="form-control" name="jabatan" maxlength="40" placeholder="Jabatan" required {% block Value-jabatan %} {% endblock Value-jabatan %}>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="btn border-secondary bg-light side-label"><i class="fas fa-hand-holding-usd"></i></span>
+                <input type="text" class="form-control" name="gaji" maxlength="40" placeholder="Gaji" required {% block Value-gaji %} {% endblock Value-gaji %}>
+            </div>
+
+            <div class="input-group mb-3">
+                <label>
+                    <span class="btn border-secondary bg-light side-label" style="border-radius: 4px 0px 0px 4px;">
+                    <i class="fas fa-child"></i>
+                    </span>
+                </label>
+                <select class="form-select" name="jeniskelamin" required>
+                    {% block option%}
+                    <option value="" hidden> Jenis Kelamin</option>
+                    {% endblock option%}
+                    <option disabled></option>
+                    <option>Pria </option>
+                    <option>Wanita </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <textarea class="form-control" name="note" rows="7" maxlength="1000" placeholder="Deskripsi merupakan opsi tambahan"> {% block note %} {% endblock note%} </textarea>
+            </div>
+
+            <div class="mt-4" style="width: 100%;">
+                <button type="submit" class="btn btn-secondary mb-3">
+                    {% block btn-action %}<i class="fas fa-plus">&nbsp;&nbsp; Tambah Data</i>{% endblock btn-action %}
+                </button>
+                <button type="reset" class="btn btn-outline-dark mb-3 ms-2" style="width: 50px;" title="reset">
+                   <i class="fas fa-sync-alt"></i>
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-outline-dark mb-3 ms-2" style="width: 50px;" title="Close">
+                    <i class="fas fa-times"></i>
+
+                </a>
+            </div>
+        </div>
+    </form>    
+    </div>
+</div>
+</div>

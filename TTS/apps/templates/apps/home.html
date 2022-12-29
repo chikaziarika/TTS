@@ -1,0 +1,59 @@
+{% extends 'apps/base.html' %}
+
+
+<!-- navbar content-->
+{% block navbar-content  %}
+<i style="color: yellowgreen;" class="fas fa-user-alt"></i>&nbsp; &nbsp; TECHNICAL TEST DEVELOPER - CRUD SYSTEM
+
+{% endblock navbar-content %}
+
+<!-- page content -->
+{% block content %}
+<div class="container">
+    <br>
+    <h1 class="text-center">DATA KARYAWAN</h1>
+    <br>
+    <table class="table table-bordered" id="example" style="text-align: center; font-size: 12px;">
+        <thead class="table-success">
+            <tr>
+                <th style="width: 5%; text-align: center;">ID</th>
+                <th style="width: 15%; text-align: center">Nama</th>
+                <th style="width: 15%; text-align: center">Email</th>
+                <th style="width: 10%; text-align: center">Jabatan</th>
+                <th style="width: 15%; text-align: center">Gaji</th>
+                <th style="width: 15%; text-align: center">Jenis Kelamin</th>
+                <th style="width: 15%; text-align: center">terdaftar</th>
+                <th style="width: 5%; text-align: center">Update</th>
+                <th style="width: 5%; text-align: center">Hapus</th>
+            </tr>
+        </thead>
+        {% for data in karyawan %}
+        <tr>
+            <td>{{data.id}}</td>
+            <td>{{data.nama}}</td>
+            <td>{{data.email}}</td>
+            <td>{{data.jabatan}}</td>
+            <td>IDR {{data.gaji |floatformat:2}}</td>
+            <td>{{data.jeniskelamin}}</td>
+            <td>{{data.created_at | date:'m/d/Y (H:i)'}}</td>
+            <td>
+                <a class="btn btn-success btn-sm" title="Edit Data" style="width: 40px" data-bs-toggle="modal" data-bs-target="#editModal{{data.pk}}"><i class="fas fa-pen fa-1x"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-success btn-sm" title="Hapus Data" style="width: 40px" data-bs-toggle="modal" data-bs-target="#deleteModal{{ data.pk }}"><i class="fas fa-trash fa-1x"></i></a>
+            </td>
+        </tr>
+        
+        <!-- INCLUDE PAGE -->
+        {% include 'apps/EditData.html' %}
+        {% include 'apps/modals/delete.html' %}
+
+        {% endfor %}
+    
+    </table>
+    
+</div> <!-- END // content -->
+
+
+<br><br><br><br>
+{% endblock content %}

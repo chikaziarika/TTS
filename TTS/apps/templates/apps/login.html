@@ -1,0 +1,46 @@
+{% extends 'apps/base.html' %}
+
+<!-- Tab Title -->
+{% block title %} Login {% endblock title %}
+
+
+<!-- Block Nav-btn denied here -->
+{% block nav-btn %} {% endblock nav-btn %}
+
+<!-- Block navbar content (fontawesome and navbar title) -->
+{% block navbar-content %}
+<i style="color: yellowgreen;" class="fas fa-user-lock"></i> &nbsp;&nbsp; Login
+{% endblock navbar-content %}
+
+<!-- Page Content -->
+
+{% block content %}
+<div class="container mt-5" id="card-login">
+    <div class="card p-3 login-border">
+        <span class="text-center mt-3 text-pulse"><strong>RESTRICTED ACCESS</strong></span>
+        <form method="POST" action="/login_user" autocomplete="off">
+            {% csrf_token %}
+            <div class="input-group mb-2 mt-4">
+                <input type="text" class="form-control" name="username" placeholder="Username">
+            </div>
+            <div class="input-group mb-2 ">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" onclick="hidepass()" type="checkbox" style="float: right;">
+            </div>
+            <div class="d-grid gap-2 mt-3">
+                <input class="btn btn-success btn-sm btn-s mt-4 mb-3" type="submit" value="Login" id ='btn-enter'>
+            </div>
+        </form>
+
+        <center class="mt-5 mb-5">
+            <i class=" fas fa-globe mt-4 mb-4" style="color: #d3d3d3; font-size: 120px;"></i>
+        </center>
+
+    </div>
+</div>
+
+<br><br><br>
+
+{% endblock content %}

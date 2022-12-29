@@ -1,0 +1,22 @@
+{% extends 'apps/modals/baseModal.html' %}
+
+<!-- id-->
+{% block modal-id %} id="deleteModal{{ data.pk }}" {% endblock modal-id %}
+
+<!-- Title -->
+{% block modal-title %}  
+<i class="text-danger fas fa-trash-alt"></i>&nbsp; &nbsp; Menghapus Data
+{% endblock modal-title %}
+
+<!-- body -->
+{% block modal-body %} 
+<div class="text-center text-danger"><i class="far fa-times-circle fa-5x mb-4 mt2"></i></div>
+<div class="text-center text-danger">
+    <span> APAKAH ANDA INGIN MENGHAPUS DATA INI ?</span>
+    <div class="text-dark mt-3 mb-2"> Karyawan: <strong>{{ data.nama}}</strong></div>
+</div>
+{% endblock modal-body %}
+<!-- footer -->
+{% block modal-footer %} 
+<a href="/HapusData/{{ data.id }}" class="btn btn-outline-danger btn-sm btn-modal" >Hapus</a>
+{% endblock modal-footer %}

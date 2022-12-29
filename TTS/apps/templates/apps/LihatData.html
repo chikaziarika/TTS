@@ -1,0 +1,47 @@
+{% extends 'apps/TambahData.html '%}
+
+<!-- Modal ID -->
+{% block modal-id %} id="editModal" {% endblock modal-id %}
+
+<!-- Modal Title -->
+{% block modal-title %}   <i class="fas fa-edit"></i> &nbsp; &nbsp; Edit Data {% endblock modal-title %} 
+
+<!-- Action Modal -->
+{% block action %} action="/EditData/" {% endblock action%}
+
+<!-- Button Action -->
+{% block btn-action %}<i class="fas fa-server">&nbsp;&nbsp; Simpan</i>{% endblock btn-action %}
+
+
+
+<!--=============================== All (input) =================================== -->
+
+<!-- ID -->
+{% block Value-id %} 
+
+<div class="input-group mb-3">
+    <span class="btn border-secondary bg-light side-label"><i class="fas fa-key"></i></span>
+    <input type="text" class="form-control" name="id" value="{{ karyawan.id }}" readonly >
+</div>
+
+{% endblock Value-id %}
+
+<!-- Nama -->
+{% block Value-nama %} value="{{ karyawan.nama }}" {% endblock Value-nama %} 
+
+<!-- Email -->
+{% block Value-email %} value="{{ karyawan.email }}" {% endblock Value-email %} 
+
+<!-- Jabatan -->
+{% block Value-jabatan %} value="{{ karyawan.jabatan }}" {% endblock Value-jabatan %} 
+
+<!-- Gaji -->
+{% block Value-gaji %} value="{{ karyawan.gaji }}" {% endblock Value-gaji %} 
+
+<!-- jenis kelamin-->
+{% block option %} 
+<option style="background-color: #d3d3d3; counter-reset: #111;"> {{ karyawan.jeniskelamin }}</option>
+{% endblock option %} 
+
+<!-- Note -->
+{% block note %}{{ karyawan.note }}{% endblock note %}
